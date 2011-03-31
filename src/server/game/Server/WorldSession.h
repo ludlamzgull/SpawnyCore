@@ -28,6 +28,7 @@
 #include "AddonMgr.h"
 #include "DatabaseEnv.h"
 #include "World.h"
+#include "Timer.h"
 
 struct ItemPrototype;
 struct AuctionEntry;
@@ -46,6 +47,7 @@ class WorldSocket;
 class LoginQueryHolder;
 class CharacterHandler;
 class SpellCastTargets;
+class BigNumber;
 struct AreaTableEntry;
 struct GM_Ticket;
 struct LfgJoinResultData;
@@ -356,6 +358,16 @@ class WorldSession
 
         // Recruit-A-Friend Handling
         uint32 GetRecruiterId() { return recruiterId; }
+		
+        BigNumber &GetSessionKey() const;
+        uint8 *GetWardenClientKey() { return m_rc4ClientKey; }
+        uint8 *GetWardenServerKey() { return m_rc4ServerKey; }
+        uint8 GetWardenStatus() { return m_wardenStatus; }
+        void SetWardenStatus(uint8 status) { m_wardenStatus = status; }
+        uint8 GetWardenSeedByte0() { return m_seedByte0; }
+        void SetWardenSeedByte0(uint8 seedByte0) { m_seedByte0 = seedByte0; }
+        ShortIntervalTimer &GetWardenTimer() { return m_WardenTimer; }
+
 
     public:                                                 // opcodes handlers
 
@@ -737,7 +749,11 @@ class WorldSession
         void HandleBattlemasterJoinArena(WorldPacket &recv_data);
         void HandleReportPvPAFK(WorldPacket &recv_data);
 
+        //Warden
         void HandleWardenDataOpcode(WorldPacket& recv_data);
+        void HandleWardenRegister();                        // for internal call
+        void HandleWardenUnregister();                      // for internal call
+
         void HandleWorldTeleportOpcode(WorldPacket& recv_data);
         void HandleMinimapPingOpcode(WorldPacket& recv_data);
         void HandleRandomRollOpcode(WorldPacket& recv_data);
@@ -906,6 +922,12 @@ class WorldSession
         AddonsList m_addonsList;
         uint32 recruiterId;
         ACE_Based::LockedQueue<WorldPacket*, ACE_Thread_Mutex> _recvQueue;
+
+        uint8 m_wardenStatus;
+        uint8 m_seedByte0;
+        uint8 m_rc4ServerKey[0x102];
+        uint8 m_rc4ClientKey[0x102];
+        ShortIntervalTimer m_WardenTimer;
 };
 #endif
 /// @}
