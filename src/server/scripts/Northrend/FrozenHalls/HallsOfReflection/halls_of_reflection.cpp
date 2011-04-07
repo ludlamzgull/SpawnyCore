@@ -136,6 +136,11 @@ enum
 	SPELL_FROSTMOURNE_VISUAL           = 73220,
 	SPELL_SHIELD_DISRUPTION            = 58291,
 
+
+	// Quel'Delar Event
+
+	SPELL_QUELDELAR_AURA			   = 70013,
+
 	FACTION                            = 2076,
 };
 
@@ -179,10 +184,10 @@ public:
         switch(pCreature->GetEntry())
         {
             case NPC_JAINA:
-                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Леди Джайна, мы готовы к следующей миссии!", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Lady Jaina, we are ready for the next mission!", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
                 break;
             case NPC_SYLVANA:
-                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Леди Сильвана, мы готовы к следующей миссии!", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Lady Sylvanas, we are ready for the next mission!", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
                 break;
         }
 
@@ -708,7 +713,7 @@ public:
         if(pCreature->isQuestGiver())
            pPlayer->PrepareQuestMenu( pCreature->GetGUID());
 
-        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Побежали!", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Run!", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
 
         pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
 
@@ -1326,9 +1331,9 @@ public:
                 return;
             DoScriptText(SAY_DEATH, me);
             m_pInstance->SetData(TYPE_FROST_GENERAL, DONE);
-            
+
             me->SummonCreature(BOSS_LICH_KING, 5564.25f, 2274.69f, 733.01f, 3.93f, TEMPSUMMON_DEAD_DESPAWN);
-            
+
             if(m_pInstance->GetData(DATA_TEAM_IN_INSTANCE)==ALLIANCE)
                 me->SummonCreature(NPC_JAINA_OUTRO, 5556.27f, 2266.28f, 733.01f, 0.8f, TEMPSUMMON_DEAD_DESPAWN);
             else
@@ -1860,6 +1865,33 @@ public:
 
 };
 
+class npc_queldelar : public CreatureScript
+{
+public:
+	npc_queldelar() : CreatureScript("npc_queldelar") { }
+
+	CreatureAI* GetAI(Creature* pCreature) const
+	{
+		return new npc_queldelarAI(pCreature);
+	}
+	struct npc_queldelarAI  : public ScriptedAI
+	{
+		npc_queldelarAI(Creature *c) : ScriptedAI(c)
+		{
+		}
+		void MoveInLineOfSight(Unit* pWho)
+		{
+			if (!pWho)
+				return;
+		if (me->IsWithinDistInMap(pWho, 20) && pWho->HasAura(SPELL_QUELDELAR_AURA))
+		{
+			me->SummonCreature(NPC_QUELDELAR, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
+			me->DisappearAndDie();
+		}
+	}
+	};
+};
+
 void AddSC_halls_of_reflection()
 {
     new npc_jaina_and_sylvana_HRintro();
@@ -1872,4 +1904,5 @@ void AddSC_halls_of_reflection()
     new npc_shadowy_mercenary();
     new npc_spectral_footman();
     new npc_tortured_rifleman();
+    new npc_queldelar();
 }
