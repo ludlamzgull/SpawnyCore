@@ -69,6 +69,7 @@ enum Data
     NPC_RAGING_GNOUL             = 36940,
     NPC_RISEN_WITCH_DOCTOR       = 36941,
     NPC_ABON                     = 37069,
+    NPC_QUELDELAR				 = 37158,
 
     NPC_FROST_GENERAL            = 36723,
 
