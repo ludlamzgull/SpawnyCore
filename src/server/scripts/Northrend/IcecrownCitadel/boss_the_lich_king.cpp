@@ -183,7 +183,7 @@ enum Spells
     SPELL_SOUL_EFFECT                = 72305,
     SPELL_IN_FROSTMOURNE_ROOM        = 74276,
     SPELL_VILE_SPIRIT_TARGET_SEARCH  = 70501,
-    SPELL_SOUL_RIP                   = 69397, 
+    SPELL_SOUL_RIP                   = 69397,
     SPELL_DESTROY_SOUL               = 74086,
     SPELL_DARK_HUNGER                = 69383,
     SPELL_DARK_HUNGER_HEAL_EFFECT    = 69384,
@@ -247,7 +247,7 @@ struct Position MovePos[]=
     {508.989f, -2124.55f, 1045.356f, 0.0f}, //boss levitates above the frostmourne
     {505.212f, -2124.35f, 1040.94f, 3.14159f}
 };
-struct Position FrostmourneRoom[] = 
+struct Position FrostmourneRoom[] =
 {
     {520.0f, -2524.0f, 1051.0f, 0.0f}, //Place where player is teleported to
     {495.0f, -2546.0f, 1051.0f, 1.5708f}, //Home position of the Spirit Warden
@@ -1499,7 +1499,7 @@ static const float Z_FLY;
                             me->AttackStop();
                             SetCombatMovement(false);
                             me->SetInCombatWithZone();
-                    
+
                             me->AddUnitMovementFlag(MOVEMENTFLAG_LEVITATING);
                             me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_TAUNT, true);
                             me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_CHARM, true);
@@ -1934,7 +1934,7 @@ class spell_lich_king_pain_and_suffering_effect : public SpellScriptLoader
                 Unit *caster = GetCaster();
                 if (!caster || !caster->isAlive())
                     return;
-                unitList.remove_if(AnyAlivePetOrPlayerInObjectFrontalConeCheck(caster)); 
+                unitList.remove_if(AnyAlivePetOrPlayerInObjectFrontalConeCheck(caster));
             }
 
             void Register()
@@ -2102,7 +2102,7 @@ class spell_lich_king_necrotic_plague : public SpellScriptLoader
 //class spell_lich_king_defile : public SpellScriptLoader
 //{
 //    public:
-//        spell_lich_king_defile() : SpellScriptLoader("spell_lich_king_defile") { } 
+//        spell_lich_king_defile() : SpellScriptLoader("spell_lich_king_defile") { }
 //
 //        class spell_lich_king_defile_SpellScript : public SpellScript
 //        {
@@ -2124,7 +2124,7 @@ class spell_lich_king_necrotic_plague : public SpellScriptLoader
 //                    if ((*it)->GetDistance2d(caster) > m_radius)
 //                        unitList.erase(it++);
 //                    else
-//                        ++it;                        
+//                        ++it;
 //                }
 //                if (!unitList.empty())
 //                    ++m_hitCount;
@@ -2133,7 +2133,7 @@ class spell_lich_king_necrotic_plague : public SpellScriptLoader
 //            void HandleDamage(SpellEffIndex effIndex)
 //            {
 //                //PreventHitDefaultEffect(effIndex);
-//                
+//
 //                Unit *caster = GetCaster();
 //                if (!(caster && caster->isAlive()) && caster->GetAI())
 //                    return;
@@ -2183,7 +2183,7 @@ class spell_lich_king_necrotic_plague : public SpellScriptLoader
 class spell_lich_king_defile : public SpellScriptLoader
 {
     public:
-        spell_lich_king_defile() : SpellScriptLoader("spell_lich_king_defile") { } 
+        spell_lich_king_defile() : SpellScriptLoader("spell_lich_king_defile") { }
 
         class spell_lich_king_defile_AuraScript : public AuraScript
         {
@@ -2200,7 +2200,7 @@ class spell_lich_king_defile : public SpellScriptLoader
                 m_radius = 8.0f + m_hitCount;
                 //Find targest
                 std::list<Unit *> targets;
-                Trinity::AnyUnfriendlyVisibleUnitInObjectRangeCheck checker(caster, caster, m_radius); 
+                Trinity::AnyUnfriendlyVisibleUnitInObjectRangeCheck checker(caster, caster, m_radius);
 
                 Trinity::UnitListSearcher<Trinity::AnyUnfriendlyVisibleUnitInObjectRangeCheck> searcher(caster, targets, checker);
 
@@ -2222,7 +2222,7 @@ class spell_lich_king_defile : public SpellScriptLoader
                 if (SpellEntry const* defileDamage = sSpellMgr->GetSpellForDifficultyFromSpell(sSpellStore.LookupEntry(SPELL_DEFILE_DAMAGE), caster))
                 {
                     triggeredSpellId = defileDamage->Id;
-                    triggeredSpellBaseDamage = (int32)(defileDamage->EffectBasePoints[EFFECT_0] * (1.0f + (pMap->IsHeroic() ? 0.1f : 0.05f) * m_hitCount));
+                    triggeredSpellBaseDamage = (int32)(defileDamage->EffectBasePoints[EFFECT_0] * (0.5f + (pMap->IsHeroic() ? 0.1f : 0.05f) * m_hitCount));
                 }
 
                 bool increaseRadius = false;
@@ -2840,7 +2840,7 @@ public:
         {
             instance = creature->GetInstanceScript();
         }
-        
+
         void EnterCombat(Unit* who)
         {
             events.Reset();
@@ -2914,7 +2914,7 @@ public:
     struct npc_raging_spirit_iccAI: public ScriptedAI
     {
         npc_raging_spirit_iccAI(Creature *creature): ScriptedAI(creature) { }
-        
+
         void EnterCombat(Unit* who)
         {
             events.Reset();
@@ -2957,7 +2957,7 @@ public:
 class spell_lich_king_tirion_mass_resurrection : public SpellScriptLoader
 {
     public:
-        spell_lich_king_tirion_mass_resurrection() : SpellScriptLoader("spell_lich_king_tirion_mass_resurrection") { } 
+        spell_lich_king_tirion_mass_resurrection() : SpellScriptLoader("spell_lich_king_tirion_mass_resurrection") { }
 
         class spell_lich_king_tirion_mass_resurrection_SpellScript : public SpellScript
         {
@@ -3136,7 +3136,7 @@ public:
         //    ++m_hitNumber;
         //    m_radiusMod = (int32)(((float)m_hitNumber / 60) * 0.9f + 0.1f) * 10000 * 2 / 3;
         //    if (SpellEntry const* defileAuraSpellEntry = sSpellMgr->GetSpellForDifficultyFromSpell(sSpellStore.LookupEntry(SPELL_DEFILE), me))
-        //        me->CastCustomSpell(defileAuraSpellEntry->Id, SPELLVALUE_RADIUS_MOD, m_radiusMod, me, true, NULL, NULL, me->GetGUID()); 
+        //        me->CastCustomSpell(defileAuraSpellEntry->Id, SPELLVALUE_RADIUS_MOD, m_radiusMod, me, true, NULL, NULL, me->GetGUID());
         //}
 
         void Reset()
@@ -3277,7 +3277,7 @@ enum eEvents
             {
                 me->CastCustomSpell(SPELL_DARK_HUNGER_HEAL_EFFECT, SPELLVALUE_BASE_POINT0, damage, me, true, NULL, NULL, me->GetGUID());
             }
-            
+
             void JustDied(Unit * /*pKiller*/)
             {
                 if (Player *player = me->FindNearestPlayer(80.0f, true))
@@ -3287,8 +3287,8 @@ enum eEvents
                     TeleportPlayerToFrozenThrone(player);
                     player->RemoveAurasDueToSpell(SPELL_IN_FROSTMOURNE_ROOM);
                     events.Reset();
-                }     
-            }                
+                }
+            }
 
             void DoAction(const int32 action)
             {
@@ -3302,7 +3302,7 @@ enum eEvents
                     case ACTION_ATTACK_TERENAS_FIGHTER:
                     {
                         events.Reset();
-                        me->NearTeleportTo(FrostmourneRoom[1].m_positionX, FrostmourneRoom[1].m_positionY, FrostmourneRoom[1].m_positionZ, FrostmourneRoom[1].m_orientation); 
+                        me->NearTeleportTo(FrostmourneRoom[1].m_positionX, FrostmourneRoom[1].m_positionY, FrostmourneRoom[1].m_positionZ, FrostmourneRoom[1].m_orientation);
                         if (Creature *terenasFighter = ObjectAccessor::GetCreature(*me, me->GetInstanceScript()->GetData64(GUID_TERENAS_FIGHTER)))
                             AttackStart(terenasFighter);
                         me->SetHealth(me->GetMaxHealth());
@@ -3404,7 +3404,7 @@ enum eEvents
                     }
                     case ACTION_ATTACK_SPIRIT_WARDEN:
                     {
-                        me->NearTeleportTo(FrostmourneRoom[2].m_positionX, FrostmourneRoom[2].m_positionY, FrostmourneRoom[2].m_positionZ, FrostmourneRoom[2].m_orientation); 
+                        me->NearTeleportTo(FrostmourneRoom[2].m_positionX, FrostmourneRoom[2].m_positionY, FrostmourneRoom[2].m_positionZ, FrostmourneRoom[2].m_orientation);
                         if (Creature *spiritWarden = ObjectAccessor::GetCreature(*me, me->GetInstanceScript()->GetData64(GUID_SPIRIT_WARDEN)))
                             AttackStart(spiritWarden);
                         me->SetHealth(me->GetMaxHealth() / 2);
