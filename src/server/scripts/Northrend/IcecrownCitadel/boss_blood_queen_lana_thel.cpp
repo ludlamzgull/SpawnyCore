@@ -111,7 +111,7 @@ enum Points
 };
 
 
-static const Position centerPos  = {4595.7090f, 2769.4190f, 400.6368f, 0.000000f};    
+static const Position centerPos  = {4595.7090f, 2769.4190f, 400.6368f, 0.000000f};
 static const Position airPos     = {4595.7090f, 2769.4190f, 422.3893f, 0.000000f};
 static const Position mincharPos = {4629.3711f, 2782.6089f, 424.6390f, 0.000000f};
 
@@ -412,7 +412,7 @@ class boss_blood_queen_lana_thel : public CreatureScript
                             for (std::list<Player*>::iterator itr = targets.begin(); itr != targets.end(); ++itr)
                                 DoCast(*itr, SPELL_TWILIGHT_BLOODBOLT);
                             DoCast(me, SPELL_TWILIGHT_BLOODBOLT_TARGET);
-                            events.ScheduleEvent(EVENT_TWILIGHT_BLOODBOLT, urand(10000, 15000), EVENT_GROUP_NORMAL);
+                            events.ScheduleEvent(EVENT_TWILIGHT_BLOODBOLT, urand(15000, 20000), EVENT_GROUP_NORMAL);
                             break;
                         }
                         case EVENT_AIR_PHASE:
