@@ -81,7 +81,7 @@ public:
 				//			}
 				uint32 count = 1;
 				pPlayer->DestroyItemCount(CHANGE_ITEM, count, true, true);
-				pPlayer->ModifyCurrency(395, (JUSTICE));
+				//pPlayer->ModifyCurrency(395, (JUSTICE));
 				pCreature->MonsterWhisper(
 						"Congratz, you've been rewarded with 70 Justice Points.",
 						pPlayer->GetGUID());
