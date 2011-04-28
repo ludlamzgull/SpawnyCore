@@ -477,3 +477,16 @@ INSERT INTO `spell_proc_event` VALUES
 (20335,0x00,10,0x00800000,0x00000000,0x00000008,0x00000100,0x00000000,0.000000,100.000000,0),
 (20336,0x00,10,0x00800000,0x00000000,0x00000008,0x00000100,0x00000000,0.000000,100.000000,0),
 (20337,0x00,10,0x00800000,0x00000000,0x00000008,0x00000100,0x00000000,0.000000,100.000000,0);
+
+-- Fix Spring Fling achievement
+UPDATE `creature_template` SET `ScriptName` = 'npc_spring_rabbit' WHERE `entry` = 32791;
+UPDATE achievement_criteria_data SET value1='186' WHERE (criteria_id='9199') AND (type='6');
+
+-- Fix for Dual Specialisation learning
+DELETE FROM `gossip_scripts` WHERE id=50099;
+INSERT INTO `gossip_scripts` VALUES (50099, 0, 15, 63680, 3, 0, 0, 0, 0, 0);
+INSERT INTO `gossip_scripts` VALUES (50099, 0, 15, 63624, 3, 0, 0, 0, 0, 0);
+INSERT INTO `gossip_scripts` VALUES (50099, 0, 15, 63680, 1, 0, 0, 0, 0, 0);
+INSERT INTO `gossip_scripts` VALUES (50099, 0, 15, 63624, 1, 0, 0, 0, 0, 0);
+INSERT INTO `gossip_scripts` VALUES (50099, 0, 15, 63624, 2, 0, 0, 0, 0, 0);
+INSERT INTO `gossip_scripts` VALUES (50099, 0, 15, 63680, 2, 0, 0, 0, 0, 0);
